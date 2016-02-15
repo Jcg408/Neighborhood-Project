@@ -1,0 +1,30 @@
+html {
+  font-size: 100%;
+  overflow-y: scroll;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: none;
+  margin: auto;
+
+}
+.col-md-8  {
+    font-family: Georgia, Helvetica, sans;
+    font-style:  italic;
+    font-weight: bold;
+    color: #151b8d
+    
+}
+.col-sm-4 {
+    padding-left: 5px;
+    padding-top: 65px;
+ 
+   
+}
+
+#map {
+	width: 960px;    
+    height: 650px;
+  
+}
+
+
+
