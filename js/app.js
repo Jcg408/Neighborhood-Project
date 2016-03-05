@@ -1,11 +1,12 @@
   var locations = [
-          ['Cave Ridge Vineyards', 38.8171003,-78.6726059, 1, 'www.caveridge.com'],
-          ['Desert Rose Winery', 38.8395124, -78.0824622, 2, 'www.desertrosewinery.com'],
-          ['Linden Vineyards', 38.880931854248, -78.0654830932617, 3, 'www.lindenvineyards.com'],
-          ['Gray Ghost Vineyards', 38.6777845770121, -78.0031395703554, 4, 'www.grayghostvineyards.com'],
-          ['Naked Mountain Winery', 38.9268762, -77.9996087, 5, 'www.nakedmountainwinery.com'],
-          ['Rappahanock Cellars', 38.8345291, -78.1161845, 6, 'www.rappahanockcellars.com'],
-          ['Shenandoah Vineyards',38.8460883,-78.5607378 ,7, 'www.shenandoahvineyardsva.com']
+          ['Cave Ridge Vineyards', 38.8171003,-78.6726059, 1,'Cave Ridge Vineyard, 1476 Conicville Rd, Mt. Jackson, VA 22842'],
+          ['Desert Rose Winery', 38.8395124, -78.0824622, 2, 'Desert Rose Winery, 13726 Hume Rd, Hume, VA 22639'],
+          ['Linden Vineyards', 38.880931854248, -78.0654830932617, 3, 'Linden Vineyards, 3708 Harrels Corner Rd, Linden VA, 22632'],
+          ['Gray Ghost Vineyards', 38.6777845770121, -78.0031395703554, 4, 'Gray Ghost Viineyards, 14706 Lee Hwy, Amissville, VA 20106'],
+          ['Naked Mountain Winery', 38.9268762, -77.9996087, 5, 'Naked Mountain Winery, 2747 Leeds Manor Rd., Markham, VA 22643 '],
+          ['Rappahanock Cellars', 38.8345291, -78.1161845, 6, 'Rappahanock Cellars, 14437 Hume Rd, Huntly, VA 22640 '],
+          ['Shenandoah Vineyards',38.8460883,-78.5607378 ,7, 'Shenandoah Vineyards, 3659 S. Ox Rd, Edinburg, VA 22824 '],
+          ['Barrel Oak Winery',38.885308,-77.905710, 8, 'Barrel Oak Winery, 3623 Grove Lane, Delaplane, VA 20144']
        ];
 
  // function to designate map
@@ -16,10 +17,21 @@
        zoom: 10
        });
        
- // set markers with animations. Drop and Bounce.
+ //longitute and latitude of vineyards in array for marker display
+     
+    //set markers and infowindow on map
         var infowindow = new google.maps.InfoWindow();
-
-        var marker, i;
+		var marker, i;
+		marker=[];
+		 
+		var toggleBounce = function() {
+			if (this.getAnimation() !== null) {
+			this.setAnimation(null);
+			} else {
+			this.setAnimation(google.maps.Animation.BOUNCE);
+			}
+		}
+       
 
         for (i = 0; i < locations.length; i++) {  
             marker = new google.maps.Marker({
@@ -27,35 +39,63 @@
 			animation: google.maps.Animation.DROP,   
             map: map
       });
+		marker.addListener('click', toggleBounce);
 		
-		google.maps.event.addListener(marker, 'click', (function(marker, i) {
+	  google.maps.event.addListener(marker, 'click', (function(marker, i) {
             return function() {
-                infowindow.setContent(locations[i][0]);
+                infowindow.setContent(locations[i][4]);
                 infowindow.open(map, marker);
-                toggleBounce();
-  };
-            function toggleBounce() 
-            {
-                if (marker.getAnimation() != null) {marker.setAnimation(null);} 
-                else {marker.setAnimation(google.maps.Animation.BOUNCE);}
                 }
-    
-            })(marker, i));
-        } 
- 
+           })(marker, i));
+		   
+		}
+		
  };
-  
-var ViewModel= function () {
-        var self = this;
-        self.vineList=ko.observableArray([]);
-       
-    var Vine = function (locations) { 
-        this.name= ko.observableArray([0]),
-        this.latLng= ko.observableArray(locations[1,2])
-
-    }  ; 
+ 
+ // create observables for filtering.
+	var userInput=(" ");
     
-};
+
+var Vine= function (data) {
+	this.name=ko.observable(data[0]),
+	this.lat=ko.observable(data[1]),
+	this.lng=ko.observable(data[2]),
+    this.marker=ko.observable()
+	};	
+// Put functionality into ViewModel
+var ViewModel = function () {
+	var self=this;
+	
+
+	var vines= ko.utils.arrayMap(locations, function(location) {
+		return new Vine(location); 
+	
+	});
+	this.vineList = ko.observableArray(vines);
+	this.filter= ko.observable("");
+	this.search=ko.observable("");
+	
+	
+	this.filteredItems = ko.computed(function() {
+        var markers= [];
+		var listFilter = this.filter().toLowerCase();
+		if (!listFilter) {
+			return this.vineList();
+		} else {
+			return ko.utils.arrayFilter(this.vineList(), function(item) {
+				 var stringStartsWith = function (string, startsWith) {          
+					string = string || "";
+					if (startsWith.length > string.length)
+						return false;
+					return string.substring(0, startsWith.length) === startsWith;
+				};
+				return stringStartsWith(item.name().toLowerCase(), listFilter);
+			});
+		}
+	},this);	
+}
+	
+
 ko.applyBindings(new ViewModel());
  
     
