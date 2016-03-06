@@ -16,7 +16,7 @@
        center: {lat: 38.92332, lng: -78.1863},
        zoom: 10
        });
-       
+      
  //longitute and latitude of vineyards in array for marker display
      
     //set markers and infowindow on map
@@ -51,21 +51,22 @@
 		}
 		
  };
- 
+  console.log('hi');
+       
  // create observables for filtering.
 	var userInput=(" ");
     
 
-var Vine= function (data) {
-	this.name=ko.observable(data[0]),
-	this.lat=ko.observable(data[1]),
-	this.lng=ko.observable(data[2]),
-    this.marker=ko.observable()
-	};	
+
 // Put functionality into ViewModel
 var ViewModel = function () {
 	var self=this;
-	
+    
+	var Vine= function (data) {
+	this.name=ko.observable(data[0]),
+	this.lat=ko.observable(data[1]),
+	this.lng=ko.observable(data[2])
+	};	
 
 	var vines= ko.utils.arrayMap(locations, function(location) {
 		return new Vine(location); 
@@ -74,10 +75,15 @@ var ViewModel = function () {
 	this.vineList = ko.observableArray(vines);
 	this.filter= ko.observable("");
 	this.search=ko.observable("");
-	
+	myClicker= function() {
+        this.marker=new google.maps.Marker ();
+        google.map.event.trigger(this.marker, 'click'); 
+        console.log('hello');
+    };
+    
 	
 	this.filteredItems = ko.computed(function() {
-        var markers= [];
+        
 		var listFilter = this.filter().toLowerCase();
 		if (!listFilter) {
 			return this.vineList();
@@ -95,9 +101,8 @@ var ViewModel = function () {
 	},this);	
 }
 	
-
+console.log ('hey');
 ko.applyBindings(new ViewModel());
- 
-    
+
     
     
