@@ -12,3 +12,5 @@ Virginia Wine country -
 6.. HOW TO GET THE MARKERS TO FILTER WITH LIST!
 7. need to add error handling.
 
+
+MODIFIED APP.JS AND COMMENTED IDEAS/NOTES 
