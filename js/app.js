@@ -1,3 +1,7 @@
+ 
+ 
+ //ADDED CONSOLE.LOGS TO SEE WHATS HAPPENING. I HAVE IDEAS BUT NOT SURE HOW TO IMPLEMENT.
+ 
   var locations = [
           ['Cave Ridge Vineyards', 38.8171003,-78.6726059, 1,'Cave Ridge Vineyard, 1476 Conicville Rd, Mt. Jackson, VA 22842'],
           ['Desert Rose Winery', 38.8395124, -78.0824622, 2, 'Desert Rose Winery, 13726 Hume Rd, Hume, VA 22639'],
