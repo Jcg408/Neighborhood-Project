@@ -13,4 +13,4 @@ Virginia Wine country -
 7. need to add error handling.
 
 
-MODIFIED APP.JS AND COMMENTED IDEAS/NOTES 
+MODIFIED APP.JS AND COMMENTED IDEAS/NOTES 3/8/2016
