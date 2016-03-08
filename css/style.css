@@ -58,3 +58,6 @@ ul {
   background-image: linear-gradient(to bottom, #3cb0fd, #3442d9);
   text-decoration: none;
 }
+a {
+    padding-left: 40px;
+}

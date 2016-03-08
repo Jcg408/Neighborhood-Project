@@ -9,7 +9,7 @@
           ['Barrel Oak Winery',38.885308,-77.905710, 8, 'Barrel Oak Winery, 3623 Grove Lane, Delaplane, VA 20144']
        ];
 
- // function to designate map
+ // function to initiate map
  function initMap() {
        var mapDiv = document.getElementById('map');
        var map = new google.maps.Map(mapDiv, {
@@ -17,13 +17,22 @@
        zoom: 10
        });
       
- //longitute and latitude of vineyards in array for marker display
+
      
     //set markers and infowindow on map
         var infowindow = new google.maps.InfoWindow();
 		var marker, i;
-		marker=[];
+
 		 
+		
+        for (i = 0; i < locations.length; i++) {  
+            marker = new google.maps.Marker({
+            position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+			animation: google.maps.Animation.DROP,   
+            map: map
+      });
+    
+      
 		var toggleBounce = function() {
 			if (this.getAnimation() !== null) {
 			this.setAnimation(null);
@@ -32,14 +41,8 @@
 			}
 		}
        
-
-        for (i = 0; i < locations.length; i++) {  
-            marker = new google.maps.Marker({
-            position: new google.maps.LatLng(locations[i][1], locations[i][2]),
-			animation: google.maps.Animation.DROP,   
-            map: map
-      });
-		marker.addListener('click', toggleBounce);
+        marker.addListener('click', toggleBounce);
+        
 		
 	  google.maps.event.addListener(marker, 'click', (function(marker, i) {
             return function() {
@@ -50,45 +53,53 @@
 		   
 		}
 		
- };
-  console.log('hi');
-       
- // create observables for filtering.
-	var userInput=(" ");
-    
-
-
-// Put functionality into ViewModel
-var ViewModel = function () {
-	var self=this;
-      self.myClicker= function() {
-            self.marker=new google.maps.Marker ([]);
-            google.maps.event.trigger(self.marker, 'click'); 
-            console.log('hello');
-    };
-      
-    
-	var Vine= function (data) {
-        this.name=ko.observable(data[0]),
-        this.lat=ko.observable(data[1]),
-        this.lng=ko.observable(data[2])
-        this.marker= [];
-      
         
-	};	
-	var vines= ko.utils.arrayMap(locations, function(location) {
+ };
+  var userInput=(" ");
+     
+     console.log('hi');
+ 
+ 
+ 
+	//Vine class separate array to create observables.
+    
+   var Vine= function (data) {
+        this.name=ko.observable(data[0]),
+        this.description=ko.observable(data[4]),
+        this.lat=ko.observable(data[1]),
+        this.lng=ko.observable(data[2]),
+        this.marker=ko.observable(),
+        this.LatLng=ko.computed(function() {
+            return  this.lat() + "," + this.lng();
+        }, this);
+   
+    console.log(Vine);  
+	}
+// Above console.log shows 8 Vines returned.
+
+var ViewModel = function () {
+	var self=this; 
+    
+    //mapping data into viewModel to create observables for filtering. 
+ 	var vines= ko.utils.arrayMap(locations, function(location) {
 		return new Vine(location); 
-	
 	});
-	this.vineList = ko.observableArray(vines);
-	this.filter= ko.observable("");
-	this.search=ko.observable("");
-	this.filteredItems = ko.computed(function() {
-        var listFilter = this.filter().toLowerCase();
+    // THIS CONSOLE.LOG SHOWS THE LOCATIONS ARRAY AVAILABLE IN THE VIEWMODEL. HOW DO I LINK EVERYTHING TOGETHER NOW??
+    console.log(locations);
+	
+	self.vineList = ko.observableArray(vines);
+	self.filter= ko.observable("");
+	self.search=ko.observable("");
+    
+  
+	
+    
+	self.filteredItems = ko.computed(function() {
+        var listFilter = self.filter().toLowerCase();
 		if (!listFilter) {
-			return this.vineList();
+			return self.vineList();
 		} else {
-			return ko.utils.arrayFilter(this.vineList(), function(item) {
+			return ko.utils.arrayFilter(self.vineList(), function(item) {
 				 var stringStartsWith = function (string, startsWith) {          
 					string = string || "";
 					if (startsWith.length > string.length)
@@ -98,9 +109,9 @@ var ViewModel = function () {
 				return stringStartsWith(item.name().toLowerCase(), listFilter);
 			});
 		}
-	},this);	
-}
-	
+	},self);	
+   console.log(self.filteredItems);
+};	
 
 ko.applyBindings(new ViewModel());
 
