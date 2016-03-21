@@ -6,30 +6,28 @@ html {
   margin: auto;
 
 }
-.col-md-8  {
+.col-md-9  {
     font-family: Georgia, Helvetica, sans;
     font-style:  italic;
     font-weight: bold;
     color: #151b8d
     
 }
-.col-sm-4 {
+.col-sm-3{
    
-    padding-top: 65px;
+    padding-top: 75px;
 
-    
 }
 
-
 #map {
-	width: 960px;    
+	width: 100%;    
     height: 650px;
-    border-color: black;
-    border-width: 20px;
+   
 }
 ul {
 	list-style: none;
 	display: block;
+    padding-top: 40px;
 }
 .btn {
   background: #3498db;
