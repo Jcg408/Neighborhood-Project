@@ -10,7 +10,7 @@ Virginia Wine country -
 4. list of locations animate appropriate marker when clicked
 5. list search/filter is functional
 6. setTimeout for markers.
-7. ** NEED TO GET MARKERS TO FILTER WITH THE LIST**
+7. Markers are filtering but need a reset when space bar clears
 8. ** NEED ERROR HANDLING **
 
-UPDATED 3/20/16
+UPDATED 3/31/16
