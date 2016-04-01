@@ -1,8 +1,7 @@
  //My Note:
- //I am trying very hard to work through this. Unfortunately, I missed the March 7 deadline on this project. I have never missed a deadline 
- //before but this is really, really hard. Blank canvases are always impossible to get my head around. Anyway - as of today(3/20/16) I have all functionality 
- //except filtering the markers with the list. I have seen probably 20-25 ways to get this done. However, none pertain exactly to how I have started. I know
- //I need to use item.marker.setVisible but how? Where? I have tried many different ways with no luck.
+ //I am spending what seems like decades on this seemingly easy project. Hah! I am now stuck on getting the markers to reappear when I backspace or clear the search bar. 
+ //I am also having problems with error handling. There is so little resource on the best way to handle the google maps error handling. Actually any error handling at all. I tried to use 
+ //onerror on the google api in the html file and a function here but doesn't seem to work for me. I had someone else look at it and they were confused as well. 
  var locations = [
      ['Cave Ridge Vineyards', 38.8171003, -78.6726059, 1,
          'Cave Ridge Vineyard, 1476 Conicville Rd, Mt. Jackson, VA 22842'
@@ -29,7 +28,7 @@
          'Barrel Oak Winery, 3623 Grove Lane, Delaplane, VA 20144'
      ]
  ];
-
+//Need to set error handling for google maps. I tried the onerror method on html link but didn't seem to work.
  function initMap() {
      var mapDiv = document.getElementById('map');
      vm.map = new google.maps.Map(mapDiv, {
@@ -84,7 +83,7 @@
      console.log(locations);
      self.vineList = ko.observableArray(vines);
      self.filter = ko.observable("");
-     self.search = ko.observable("");
+  
      //   Function to bind to list for marker action.
      self.select = function(loc) {
              toggleBounce(loc.marker);
@@ -92,32 +91,31 @@
              vm.infowindow.open(vm.map, loc.marker);
              console.log(loc.description());
          }
-         // Need to set markers to filter with list. I know I have to use item.marker and setVisible but clueless as to where or how. I have tried a for (var i=0......) loop, 
-         // I have tried  if (item.name=== stringStartsWith), (item.name != stringStartsWith)... I have placed the item.marker.setVisible inside the filteredItems function, inside
-         // the arrayFilter(self.vineList) function, inside the var stringStartsWith function.
-         // The one thing I am sure of is that item refers to the vine array.
-     self.filteredItems = ko.computed(function() {
+         //filter the list to show appropriate markers and list item. Somehow I have to fix the backspace to show markers re-appearing.
+    self.filteredItems = ko.computed(function() {
          var listFilter = self.filter().toLowerCase();
          if (!listFilter) {
              return self.vineList();
+             item.marker.setVisible(true);
          } else {
-             return ko.utils.arrayFilter(self.vineList(), function(
-                 item) {
-                 var stringStartsWith = function(string,
-                     startsWith) {
-                     string = string || "";
-                     if (startsWith.length > string.length)
-                         return false;
-                     return string.substring(0,
-                             startsWith.length) ===
-                         startsWith;
-                 };
-                 return stringStartsWith(item.name().toLowerCase(),
-                     listFilter);
-             });
-         }
-     }, self);
+             if (self.vineList().length>0) {
+                    return ko.utils.arrayFilter(self.vineList(), function (item) {
+                        console.log(item);
+                            if (item.name().toLowerCase().indexOf(listFilter) > -1 ||
+                                item.description().toLowerCase().indexOf(listFilter) > -1) {
+                                item.marker.setVisible(true);
+                                return true;
+                        } else {
+                                item.marker.setVisible(false);
+                                return false;
+                        }
+                    });
+            } 
+        };
+               
+    }, self);
      console.log(self.filteredItems);
+     //reset vineList when search is empty. How?
  }; //end  old viewmodel
  var vm = new ViewModel();
  ko.applyBindings(vm);
