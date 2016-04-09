@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta content="Front End Nanodegree Project 5" name="Neighborhood Map">
+    <meta content="J. Gladstone" name="author">
+    <title>Favorite Wineries in Shenandoah Valley , VA</title>
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+    <link href="css/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="css/normalize.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8">
+                <h1>VIRGINIA SHENANDOAH VALLEY WINE COUNTRY</h1>
+                <div id="map"></div>
+            </div>
+            <div class="col-sm-4">
+                <div class="location-search">
+                    <form id="searchbox" name="searchbox">
+                        <input data-bind=
+                        "textInput: userInput, value: filter, valueUpdate: 'afterkeydown'" id=
+                        "search" placeholder="Search" type="text">
+                    </form>
+                    <p>Click Marker for Wine.com!</p>
+                </div>
+                <ul data-bind="foreach: filteredItems">
+                    <li><button class="btn" data-bind=
+                    "text: $data.name, click: $parent.select"></button></li>
+                </ul>
+            </div><a href="http://www.wine.com/" title=
+            "Wine.com the destination for Wine and Wine Gifts"><img alt=
+            "Wine.com the destination for Wine and Wine Gifts" src=
+            "http://cache.wine.com/images/logos/160x40_winecom_logo.png"></a>
+        </div>
+    </div>
+    <script src="js/lib/knockout-3.4.0.js">
+    </script> 
+    <script src="js/app.js">
+    </script> 
+    <script async onerror="googleError()" src=
+    "https://maps.googleapis.com/maps/api/js?key=AIzaSyB-7MeBLgUfvFyJW4hebJYJuBJFp-cjrgo&callback=initMap">
+    </script> 
+    <script src="js/lib/jquery.min.js">
+    </script> 
+    <script src=
+    "http://services.wine.com/api/beta2/service.svc/json/catalog?apikey=e722ee577b241fc0a5f853bf81cfd580">
+    </script>
+</body>
+</html>
