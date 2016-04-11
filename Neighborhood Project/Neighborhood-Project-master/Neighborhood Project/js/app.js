@@ -33,16 +33,18 @@
         'WICKED OAK FARMS & VINEYARD,<br> 2121 S. Pifer Rd, Star Tannery, VA 22654',
      ]
  ];
+  
 //Initialize the map with coordinates  adding drop animation for markers when the map loads. Also sets up infowindow for marker locations.
 function initMap() {
         var mapDiv = document.getElementById('map');
         vm.map = new google.maps.Map(mapDiv, {
             center: {
-                lat: 38.80748,
-                lng: -78.78989
+                lat: 38.7125957,
+                lng: -78.1645058
             },
             zoom: 9
         });
+           
         vm.infowindow = new google.maps.InfoWindow();
         var marker, i;
         vm.vineList().forEach(function(vine) {
@@ -52,18 +54,14 @@ function initMap() {
                 map: vm.map
             });
             vine.marker = marker
-                // click function for markers to open Wine.com API with error handling if fail.
+              
             google.maps.event.addListener(marker, 'click', function() {
                 vm.select(vine);
-                //open new window for wine.com if marker is clicked.
-                window.open("http://www.wine.com/v6/giftcenter/", "_blank",
-                    "toolbar=yes,scrollbars=yes,resizable=yes,top=20,left=20,width=450,height=450");
-                if (typeof window.open === 'undefined') {
-                    alert("Unfortunately, Wine.com is currently")
-                }
+                window.open (" https://api.yelp.com/v2/search/?term=lodging&location=front royal, va&limit=10&category_filter=hotels")
             });
         });
     }
+
     //Animation for markers after loaded on the map. Direct click or list click will animate the markers for 1250ms.
 var toggleBounce = function(marker) {
     if (marker.getAnimation() !== null) {
@@ -98,7 +96,7 @@ var ViewModel = function() {
     var vines = ko.utils.arrayMap(locations, function(location) {
         return new Vine(location);
     });
-    console.log(locations);
+
     self.vineList = ko.observableArray(vines);
     self.filter = ko.observable("");
     //   Function to bind to list for marker action.
@@ -106,15 +104,14 @@ var ViewModel = function() {
         toggleBounce(loc.marker);
         vm.infowindow.setContent(loc.description());
         vm.infowindow.open(vm.map, loc.marker);
-        console.log(loc.description());
+
     }
         //List and marker filter function using the search bar with userinput.
     self.filteredItems = ko.computed(function() {
         var listFilter = self.filter().toLowerCase();
         return ko.utils.arrayFilter(self.vineList(), function(item) {
-            console.log(item);
-            if (item.name().toLowerCase().indexOf(listFilter) > -1 || item.description().toLowerCase().indexOf(
-                listFilter) > -1) {
+            //console.log(item);
+            if (item.name().toLowerCase().indexOf(listFilter) > -1) {
                 if (item.marker) item.marker.setVisible(true);
                 return true;
             } else {
@@ -123,7 +120,53 @@ var ViewModel = function() {
             }
         });
     }, self);
-    console.log(self.filteredItems);
+    //console.log(self.filteredItems);
+    
 }; //end  old viewmodel. This helps me with bracket and paranthesis reassignment when I have to make changes internally.
 var vm = new ViewModel();
 ko.applyBindings(vm);
+
+
+//Yelp function - Hard time trying to find code that works. This code was actually posted  on Forum with the JSFiddle adaptation.
+     function nonceGenerate() {
+            return (Math.floor(Math.random() * 1e12).toString());
+};
+
+var yelp_url = ' https://api.yelp.com/v2/search/?term=vineyard&location=Shenandoah Valley, VA&sort=1&limit=12&actionlinks=true&category_filter=winetastingroom ';
+
+  var parameters = {
+    term: 'vineyard',
+    location: '22630',
+    oauth_consumer_key: '80_FbewR0VsirtcxmFlukg ',
+    oauth_token: 'TEOFohNLRQRSmOaSjsXp_9PzLCComH32',
+    oauth_nonce: nonceGenerate(),
+    oauth_timestamp: Math.floor(Date.now()/1000),
+    oauth_signature_method: 'HMAC-SHA1',
+    callback: 'cb'             // This is crucial to include for jsonp implementation in AJAX or else the oauth-signature will be wrong.
+  };
+  
+  var consumer_secret = ' j6Nk24lg6lfX2NeTjVV2bBzAKj8',
+      token_secret = 'ODMMspoFdOFNCEsm4JppmZEA9Zk';
+      
+  var encodedSignature = oauthSignature.generate('GET',yelp_url, parameters, consumer_secret, token_secret);
+  parameters.oauth_signature = encodedSignature;
+
+  var settings = {
+    url: yelp_url,
+    data: parameters,
+    cache: true,                // This is crucial to include as well to prevent jQuery from adding on a cache-buster parameter "_=23489489749837", invalidating our oauth-signature
+    dataType: 'jsonp',
+    jsonpCallback: 'cb',
+    success: function(results) {
+      // Do stuff with results
+      console.log("SUCCCESS! %o", results);
+    },
+    error: function(error) {
+      // Do stuff on fail
+      console.log(error);
+    }
+  };
+// Send AJAX query via jQuery library.
+$.ajax(settings);
+
+     
