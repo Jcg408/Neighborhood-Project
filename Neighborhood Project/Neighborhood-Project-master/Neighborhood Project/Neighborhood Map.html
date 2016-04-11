@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name= "viewport" content="width=device-width, initial-scale=1" >
+    <meta name="Neighborhood Map" content="Front End Nanodegree Project 5" >
+    <meta name="author" content="J. Gladstone" >
+    <title> Wineries in Shenandoah Valley , VA</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/bootstrap.css" >
+    <link rel="stylesheet" href="css/normalize.css" >
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-9">
+                <h1>VIRGINIA SHENANDOAH VALLEY WINE COUNTRY</h1>
+                <div id="map"></div>
+            </div>
+            <div class="col-sm-3">
+                <div class="location-search">
+                    <form id="searchbox" name="searchbox">
+                        <input data-bind=
+                        "textInput: userInput, value: filter, valueUpdate: 'afterkeydown'" id=
+                        "search" placeholder="Search" type="text">
+                    </form>
+                 
+                </div>
+                <ul data-bind="foreach: filteredItems">
+                    <li><button class="btn" data-bind=
+                    "text: $data.name, click: $parent.select"></button></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script src="js/lib/knockout-3.4.0.js"></script> 
+    <script src="js/app.js"></script> 
+    <script async onerror="googleError()" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-7MeBLgUfvFyJW4hebJYJuBJFp-cjrgo&callback=initMap"></script> 
+      <script src= "js/lib/sha1.js"></script>
+    <script src="js/lib/jsOAuth-1.3.6.min.js"></script>
+
+    <script src="js/lib/jquery.min.js"></script> 
+</body>
+</html>
