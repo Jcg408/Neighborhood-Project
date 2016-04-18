@@ -1,6 +1,6 @@
  //Neighborhood Project number 5 for Udacity Nanodegree FEND.
- 
  //Location data for Google Map api and list filter.
+
  var locations = [
     ['Barrel Oak Winery', 38.885308, -77.905710, 1,
          'BARREL OAK WINERY, <br>3623 Grove Lane, Delaplane, VA 20144'
@@ -33,7 +33,7 @@
         'WICKED OAK FARMS & VINEYARD,<br> 2121 S. Pifer Rd, Star Tannery, VA 22654',
      ]
  ];
-  
+
 //Initialize the map with coordinates  adding drop animation for markers when the map loads. Also sets up infowindow for marker locations.
 function initMap() {
         var mapDiv = document.getElementById('map');
@@ -44,7 +44,7 @@ function initMap() {
             },
             zoom: 9
         });
-           
+
         vm.infowindow = new google.maps.InfoWindow();
         var marker, i;
         vm.vineList().forEach(function(vine) {
@@ -54,10 +54,10 @@ function initMap() {
                 map: vm.map
             });
             vine.marker = marker
-              
+
             google.maps.event.addListener(marker, 'click', function() {
                 vm.select(vine);
-                window.open (" https://api.yelp.com/v2/search/?term=lodging&location=front royal, va&limit=10&category_filter=hotels")
+
             });
         });
     }
@@ -121,35 +121,34 @@ var ViewModel = function() {
         });
     }, self);
     //console.log(self.filteredItems);
-    
+
 }; //end  old viewmodel. This helps me with bracket and paranthesis reassignment when I have to make changes internally.
 var vm = new ViewModel();
 ko.applyBindings(vm);
-
 
 //Yelp function - Hard time trying to find code that works. This code was actually posted  on Forum with the JSFiddle adaptation.
      function nonceGenerate() {
             return (Math.floor(Math.random() * 1e12).toString());
 };
 
-var yelp_url = ' https://api.yelp.com/v2/search/?term=vineyard&location=Shenandoah Valley, VA&sort=1&limit=12&actionlinks=true&category_filter=winetastingroom ';
-
+  var yelp_url = 'https://api.yelp.com/v2/search';
+  
   var parameters = {
-    term: 'vineyard',
-    location: '22630',
-    oauth_consumer_key: '80_FbewR0VsirtcxmFlukg ',
-    oauth_token: 'TEOFohNLRQRSmOaSjsXp_9PzLCComH32',
+    oauth_consumer_key: '80_FbewR0VsirtcxmFlukg',
+    oauth_token: 'H1e0dZKyT2b4wym4hMsOB4l1jMG8iv6j',
     oauth_nonce: nonceGenerate(),
     oauth_timestamp: Math.floor(Date.now()/1000),
     oauth_signature_method: 'HMAC-SHA1',
-    callback: 'cb'             // This is crucial to include for jsonp implementation in AJAX or else the oauth-signature will be wrong.
+    oauth_version: '1.0',
+    callback: 'cb',            // This is crucial to include for jsonp implementation in AJAX or else the oauth-signature will be wrong.
+    term: 'vineyard',
+    location: '22630'
   };
-  
-  var consumer_secret = ' j6Nk24lg6lfX2NeTjVV2bBzAKj8',
-      token_secret = 'ODMMspoFdOFNCEsm4JppmZEA9Zk';
-      
-  var encodedSignature = oauthSignature.generate('GET',yelp_url, parameters, consumer_secret, token_secret);
-  parameters.oauth_signature = encodedSignature;
+    var consumer_secret = 'j6Nk24lg6lfX2NeTjVV2bBzAKj8',
+      token_secret = 'hDBRHUfKhJB3QwAYOqdhLekw2gI';
+
+  var encodedSignature= oauthSignature.generate('GET', yelp_url, parameters, consumer_secret, token_secret);
+    parameters.oauth_signature = encodedSignature;
 
   var settings = {
     url: yelp_url,
@@ -159,14 +158,12 @@ var yelp_url = ' https://api.yelp.com/v2/search/?term=vineyard&location=Shenando
     jsonpCallback: 'cb',
     success: function(results) {
       // Do stuff with results
-      console.log("SUCCCESS! %o", results);
+      console.log("SUCCESS!%o", results);
     },
-    error: function(error) {
-      // Do stuff on fail
+    error:function(error) {
+      alert ("Unfortunately, Yelp is unavailable. Please try again later.")
       console.log(error);
     }
   };
 // Send AJAX query via jQuery library.
 $.ajax(settings);
-
-     
