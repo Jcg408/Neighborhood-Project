@@ -1,168 +1,203 @@
+
+/*  Found a good source explaining CSS Flex-Box ( A Complete Guide to Flex-Box/CSS-Tricks this is a very useful guide.) */
+
 * {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  -box-sizing: border-box;
+-webkit-box-sizing:border-box;
+-moz-box-sizing:border-box;
+-box-sizing:border-box;
 }
 html {
-  font-size: 100%;
-  overflow-y: scroll;
-  -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: none;
-  margin: auto;
-
+font-size:100%;
+overflow-y:scroll;
+-ms-text-size-adjust:100%;
+-webkit-text-size-adjust:none;
 }
 .col-md-9 {
-    font-family: Georgia, Helvetica, sans;
-    font-style:  italic;
-    font-weight: bold;
-    color: #151b8d;
-    padding-right: 5px;
-    max-height: 580px;
+font-family:Georgia, Helvetica, sans;
+font-style:italic;
+font-weight:700;
+max-height:580px;
+padding-right:0;
 }
 .col-sm-3 {
-    padding-top: 75px;
-    padding-left: 5px;
+padding-top:65px;
+padding-right:10px;
+padding-left: 5px;
 }
-
 #map {
-    position: relative;
-	width: 100%;    
-    height: 580px;
+display:block;
+top:5px;
+position:relative;
+width:100%;
+height:540px;
+margin:0;
+}
+.location-search {
+padding-left:10px;
+font-family:Georgia, Helvetica, sans;
+font-size:16px;
+font-weight:700;
+color:#151b8d;
 }
 
-.location-search {
-    padding-left: 10px;
-    font-family: Georgia, Helvetica, sans;
-    font-size: 16px;
-    font-weight: bold;
-    color: #151b8d
-}
 p {
-    font-family: Georgia, Helvetica, sans;
-    font-style: italic;
-    font-weight: bold;
-    padding-top: 20px;
-    color: #151b8d;
-    font-size: 18px;
-    border-bottom-color: #151b8d;
-    border-bottom-width:10px;
+font-family:Georgia, Helvetica, sans;
+font-style:italic;
+font-weight:700;
+padding-top:20px;
+color:#082676;
+font-size:18px;
 }
 ul {
-	list-style-type: none;
-	display: block;
-    padding-top: 10px;
-    padding-left: 5px;
-    
+list-style-type:none;
+display:flex;
+flex-direction: column;
+padding-top:10px;
+padding-left:5px;
+color:#082676;
 }
 .btn {
-  background: #3498db;
-  background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
-  background-image: -moz-linear-gradient(top, #3498db, #2980b9);
-  background-image: -ms-linear-gradient(top, #3498db, #2980b9);
-  background-image: -o-linear-gradient(top, #3498db, #2980b9);
-  background-image: linear-gradient(to bottom, #3498db, #2980b9);
-  -webkit-border-radius: 28;
-  -moz-border-radius: 28;
-  border-radius: 18px;
-  font-family: Georgia;
-  color: #ffffff;
-  font-size: 14px;
-  text-decoration: none;
-  margin: 5px;
-}
 
+font-size:14px;
+text-decoration:none;
+margin:5px;
+}
 .btn:hover {
-  background: #3cb0fd;
-  background-image: -webkit-linear-gradient(top, #3cb0fd, #3442d9);
-  background-image: -moz-linear-gradient(top, #3cb0fd, #3442d9);
-  background-image: -ms-linear-gradient(top, #3cb0fd, #3442d9);
-  background-image: -o-linear-gradient(top, #3cb0fd, #3442d9);
-  background-image: linear-gradient(to bottom, #3cb0fd, #3442d9);
-  text-decoration: none;
+background:#3cb0fd;
+background-image:linear-gradient(tobottom,#3cb0fd,#3442d9);
+text-decoration:none;
+}
+.wikipedia-container {
+position:absolute;
+float:left;
+top:110px;
+width:360px;
+padding-left:20px;
+background-color:#FFF;
+color:#082676;
+font-weight:700;
+opacity:0.8;
+z-index:11;
+margin:0;
+}
+#wikipedia-header {
+    font-weight: bold;
+}
+#site {
+color:#151b8d;
+background-color: white;
+}
+#submit-btn {
+background-color:#FFF;
+color:#082676;
 }
 
-@media only screen and (max-width: 1085px) {
-    .col-md-9{
-        font-size: 80%;
-    }
-     ul  {
-         padding-left: 40px;
-        display: block;
-    }
-    .btn {
-    font-size: 80%;
-    }
-}
-@media only screen and (max-width: 992px) {
-    .col-sm-3{
-        padding: 40px;
-        }
+@media only screen 
+and (min-device-width : 320px) 
+and (max-device-width : 480px) {
+
+/* Smartphones (portrait and landscape) ----------- */
+p {
+    font-size: 90%;
     
-    ul  {
-        width: 950px;
-        font-size: 50%;
-        display: flex;
-        flex-wrap: wrap;
-        flex-direction: row;
-        padding-left: 5px;
-        padding-bottom: 
-     }
-        
-        .btn {
-        display: flex;
-         flex-wrap: wrap;
-         flex-direction: row;
-        float: left;
-        font-size: 80%;
-        margin: 1px;
-        border: 1px solid black;
-        text-decoration: underline;
-        color: #3498db;
-        background: none;
-    }
-       .btn:hover {
-        background: none;
-        background-image: none;
-    }
 }
-@media only screen and (max-width: 760px) {
-    .col-md-9 { 
-    font-size:  65%
-    }
-    .col-sm-3 {  
-       display: -webkit-flex; 
-        -webkit-flex-wrap: wrap ;
-         padding-top: 5px;
-        padding-left: 5px;
-       }
-    #map {
-        position: relative;
-        width: 100%;
-       height: 450px;
-       padding-bottom: 5px;
-    }
-    location-search {
-       padding-bottom: 10px;
-    }
-    ul  {
-        width: 758px;
-        font-size: 50%;
-        display: flex;
-        flex-wrap: wrap;
-        flex-direction: row;
-    }
-      .btn {
-        display: flex;
-         flex-wrap: wrap;
-        float: left;
-        margin: 1px;
-        border: 1px solid black;
-        text-decoration: underline;
-        color: #3498db;
-        background: none;
-    }
-    .btn:hover {
-        background: none;
-        background-image: none;
-    }
- 
+#map {
+    max-width: 100%;
+    max-height: 390px;
+    padding-top: 2px;
+}
+.col-sm-3 {
+    padding-top: 10px;
+}
+ul {
+    flex-flow: row wrap;
+    flex-shrink: 4;
+    padding-top: 5px;
+}
+.wikipedia-container {
+    max-width: 70%;
+    max-height: 50px;
+}
+.location-search {
+    font-size: 90%;
+}
+}
+@media only screen 
+and (max-device-width : 321px) {
+
+/* Smartphones (landscape) ----------- */
+p {
+    font-size: 90%
+}
+#map {
+    max-width: 90%;
+    max-height: 275px;
+}
+.col-sm-3 {
+    padding-top: 10px;
+}
+ul {
+    flex-flow: row wrap;
+    flex-shrink: 4;
+}
+.wikipedia-container {
+    font-size: 90%;
+    max-width: 40%;
+    max-height: 35px;
+}
+}
+
+@media only screen 
+and (max-device-width : 667px) {
+/* Smartphones (portrait) ----------- */
+p {
+    padding-top: 5px;
+    font-size: 90%
+}
+#map {
+    max-width: 100%;
+    max-height: 265px;
+}
+.col-sm-3 {
+    padding-top: 10px;
+}
+ul {
+    flex-flow: row wrap;
+    flex-shrink: 4;
+}
+.btn {
+    font-size: smaller;
+}
+.wikipedia-container {
+    font-size: 90%;
+    max-width: 200px;
+    max-height: 100px;
+    
+}
+}
+
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) {
+/* iPads (portrait and landscape) ----------- */
+p {
+    font-size: 18px;
+}
+#map {
+    max-width: 100%;
+    max-height: 540px;
+}
+.col-sm-3 {
+    padding-top: 65px;
+   
+}
+.wikipedia-container {
+    padding-top: 20px;
+    font-size: 90%;
+    max-width: 60%;
+    max-height: 75px;
+}
+}
+
+
+
