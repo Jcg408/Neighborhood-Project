@@ -1,40 +1,52 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <meta charset="utf-8">
-    <meta name= "viewport" content="width=device-width, initial-scale=1" >
-    <meta name="Neighborhood Map" content="Front End Nanodegree Project 5" >
-    <meta name="author" content="J. Gladstone" >
-    <title> Wineries in Shenandoah Valley , VA</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="Neighborhood Map" content="Front End Nanodegree Project 5">
+    <meta name="author" content="J. Gladstone">
+    <title>Neighborhoodo Map of  Shenandoah Valley , VA</title>
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/bootstrap.css" >
-    <link rel="stylesheet" href="css/normalize.css" >
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/normalize.css">
+
 </head>
+<!-- Set up map location and  form  field for Wikipedia API. -->
 <body>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-9">
-                <h1>VIRGINIA SHENANDOAH VALLEY WINE COUNTRY</h1>
+            
+        <div class="col-md-9">
+      <p>SHENANDOAH VALLEY ATTRACTIONS</p>
                 <div id="map"></div>
+                <div class="wikipedia-container">
+                    <form class="form-container" id="form-container">
+                        <h5 id="wikipedia-header">WIKIPEDIA INFO</h5>
+                        <label for="site">Location: </label><input type="text" id="site" value="">
+                        <button id="submit-btn">Submit</button>
+                        <ul id="wikipedia-links"></ul>
+                    </form>
+                </div>
             </div>
+<!-- Use of Knockout for MVVM organization of app.  Set up input field for filter search. -->
             <div class="col-sm-3">
                 <div class="location-search">
                     <form id="searchbox" name="searchbox">
-                        <input data-bind="textInput: userInput, value: filter, valueUpdate: 'afterkeydown'" id="search" placeholder="Search" type="text">
+                        <input data-bind="textInput: userInput, value: filter, valueUpdate: 'afterkeydown'" id="search" placeholder="Search Location" type="text">
                     </form>
                 </div>
                 <ul data-bind="foreach: filteredItems">
-                    <li><button class="btn" data-bind="text: $data.name, click: $parent.select"></button></li>
+                    <li><button class="btn btn-primary btn-sm" data-bind="text: $data.name, click: $parent.select"></button></li>
                 </ul>
             </div>
         </div>
     </div>
-    <script src="js/lib/knockout-3.4.0.js"></script> 
-     <script src="js/app.js"></script> 
-       <script src="js/lib/sha1.js"></script> 
-      <script src="js/lib/jquery.min.js"></script> 
-       <script src="js/lib/oauth-signature.min.js"></script>
+  <!--   Asynchronous requests for scripts. -->
+    <script src="js/lib/jquery-1.12.3.js"></script>
+    <script src="js/lib/knockout-3.4.0.js"></script>
+    <script src="js/app.js"></script>
     <script async onerror="googleError()" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-7MeBLgUfvFyJW4hebJYJuBJFp-cjrgo&callback=initMap"></script>
-     
 </body>
+
 </html>
